@@ -1,0 +1,27 @@
+%{
+#include <stdio.h>
+
+// Global variables
+int lc = 0, sc = 0, tc = 0, ch = 0, wc = 0;
+%}
+
+/* RULE SECTION */
+%%
+[\n]        { lc++; ch += yyleng; }
+[\t]        { sc++; ch += yyleng; }
+[^\t\n ]+   { tc++; ch += yyleng; }
+[ \t\n ]+   { wc++; ch += yyleng; }
+%%
+
+int yywrap() { return 1; }
+
+/* MAIN FUNCTION */
+int main() {
+    printf("Enter the Sentence:\n");
+    yylex();
+    printf("Number of lines        : %d\n", lc);
+    printf("Number of spaces       : %d\n", sc);
+    printf("Number of tabs, words, charc : %d, %d, %d\n", tc, wc, ch);
+    return 0;
+}
+
